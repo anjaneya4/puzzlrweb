@@ -1,0 +1,23 @@
+.solver_item {
+	background: #888888;
+  	color: white;
+  	padding: 30px;
+  	border-style: solid;
+  	font-size: 30px;
+}
+.solver_item_empty {
+	.solver_item;
+	background: white;
+}
+table.solver_table {
+	align: center;
+	width: 40%;
+}
+.loading_image {
+	width: 10%;
+	height: 10%;
+}
+.solver_cell {
+	height: 100px;
+	width: 100px;
+}
