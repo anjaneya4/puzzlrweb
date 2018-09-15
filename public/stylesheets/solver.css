@@ -1,5 +1,5 @@
 .solver_item {
-	background: #888888;
+	background: #5b9aa0;
   	color: white;
   	padding: 30px;
   	border-style: solid;
@@ -20,4 +20,7 @@ table.solver_table {
 .solver_cell {
 	height: 100px;
 	width: 100px;
+}
+.another-puzzle-btn {
+	background-color: #d6d4e0: 
 }

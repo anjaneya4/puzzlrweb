@@ -1,68 +1,46 @@
 function onload(container, dataSource) {
-	checkResources()
-	console.log("Loading puzzle in " + container)
-	$.getJSON(dataSource, function(tableData) {
-	  	  var table = document.createElement('table');
-	  	  table.className = 'solver_table container text-center'
-		  var tableBody = document.createElement('tbody');
-
-		  tableData.forEach(function(rowData) {
-			var row = document.createElement('tr');
-
-			rowData.forEach(function(cellData) {
-			  var cell = document.createElement('td');
-			  cell.appendChild(getItem(cellData));
-			  cell.className = 'solver_cell'
-			  row.appendChild(cell);
-			});
-
-			tableBody.appendChild(row);
-		  });
-
-		  table.appendChild(tableBody);
-		  container = document.getElementById(container)
-		  parent = container.parentElement
-		  parent.removeChild(container);
-		  setEventListeners(table)
-		  parent.appendChild(table);
-	});
+	checkResources(container, dataSource)
+	storeData("dataSource", dataSource)
+	storeData("container", container)
+	loadPuzzle(container, dataSource)
 }
 
-function getItem(data) {
-	empty = (data == 0)
-	cell_id = 'solver_item_' + data
-	className = "solver_item"
-	if(empty) {
-		data = ''
-		className = "solver_item_empty"
+function reloadPuzzle(container, dataSource, force=true) {
+	if(force) clearPuzzleData()
+	clearPuzzle(container, dataSource)
+	loadPuzzle(container, dataSource)
+}
+
+function clearPuzzle(container, dataSource) {
+	addLog('Clearing Puzzle container: ' + container)
+	element = document.getElementById(container)
+	if (typeof(element) != 'undefined' && element != null)
+	{
+		parent = element.parentElement
+		element.innerHTML = '<img src="images/loading.gif" class="loading_image">'
 	}
-	text_Node = document.createTextNode(data);
-	div_elelment = document.createElement("DIV")
-	div_elelment.appendChild(text_Node)
-	div_elelment.className = className;
-	div_elelment.id = cell_id;
-	div_elelment.onclick = function() { 
-            onCellTap(this);
-        };
-	return div_elelment
 }
 
-function setEventListeners(table) {
-	// body...
+function loadPuzzle(container, dataSource) {
+	container_id = container
+	addLog("Loading puzzle in " + container_id)
+	new_container = document.createElement('DIV');
+	new_container.id = container_id
+	renderPuzzle(container_id, dataSource, new_container)
 }
 
-function onCellTap(div_elelment){
-	div_elelment.innerHTML = ''
-	div_elelment.className = "solver_item_empty"
-
-	console.log('A cell was clicked: ' + div_elelment.id)
-}
-
-function checkResources() {
+function checkResources(container, dataSource) {
 	if (typeof(Storage) !== "undefined") {
+		addLog('Storage available!')
+		localStorage.clear()
 	} else {
-	    // Sorry! No Web Storage support..
-	    console.log('Sorry! No Web Storage support..')
-	    alert('Sorry! No Web Storage support..')
+	// Sorry! No Web Storage support..
+	addLog('Sorry! No Web Storage support..')
+	alert('Sorry! No Web Storage support..')
 	}
+}
+
+function clearPuzzleData() {
+	addLog('clearing puzzle data...')
+	localStorage.removeItem("puzzle_data")
 }

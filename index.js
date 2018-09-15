@@ -7,5 +7,7 @@ express()
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
-  .get('/solve', (req, res) => res.render('pages/puzzle/solve', {puzzleDataSource: 'http://puzzlr4u.herokuapp.com/api/randompuzzle'}))
+  .get('/solve', (req, res) => res.render('pages/puzzle/solve', {puzzleDataSource: 'https://puzzlr4u.herokuapp.com/api/randompuzzle',
+																easyPuzzleDataSource: 'https://puzzlr4u.herokuapp.com/api/solvedpuzzle'}))
+  // .get('/solve', (req, res) => res.render('pages/puzzle/solve', {puzzleDataSource: 'http://localhost:8080/api/solvedpuzzle'}))
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
