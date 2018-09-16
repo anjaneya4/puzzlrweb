@@ -5,9 +5,17 @@
   	border-style: solid;
   	font-size: 30px;
 }
+.solver_item.solved {
+	background: #b8a9c9;
+	color: white;
+  	padding: 30px;
+  	border-style: solid;
+  	font-size: 30px;
+}
 .solver_item_empty {
 	.solver_item;
 	background: white;
+	color: white;
 }
 table.solver_table {
 	align: center;

@@ -1,13 +1,6 @@
 function renderPuzzle(container, dataSource, target, data = null) {
 	data = retrieveData('puzzle_data')
 	if(data == null){
-		// var Httpreq = new XMLHttpRequest(); // a new request
-	 //    Httpreq.open("GET", dataSource, true);
-	 //    Httpreq.send(null);
-	 //    response = Httpreq.responseText;
-	 //    var json_obj = JSON.parse(response);
-	 //    addLog('Received server response: ' + response + ', of type: ' + typeof(response))
-	 //    addLog('Received server json_obj: ' + json_obj + ', of type: ' + typeof(json_obj))
 		$.getJSON(dataSource, function(tableData) {
 			addLog('Received server data: ' + tableData + ', of type: ' + typeof(tableData))
 			parseData(container, dataSource, target, tableData)
@@ -26,10 +19,10 @@ function parseData(container, dataSource, target, tableData) {
 	tableData.forEach(function(rowData) {
 		var row = document.createElement('tr');
 		rowData.forEach(function(cellData) {
-		var cell = document.createElement('td');
-		cell.appendChild(createItem(cellData, solved));
-		cell.className = 'solver_cell'
-		row.appendChild(cell);
+			var cell = document.createElement('td');
+			cell.appendChild(createItem(cellData, solved));
+			cell.className = 'solver_cell'
+			row.appendChild(cell);
 		});
 		tableBody.appendChild(row);
 	});
@@ -45,31 +38,56 @@ function parseData(container, dataSource, target, tableData) {
 
 function displayKudos(solved) {
 	if(solved){
-		document.getElementById("action_placeholder").innerHTML = 'Kudos!'
+		setActionNotification('Kudos!')
 		celebrate()
 	} else {
-		document.getElementById("action_placeholder").innerHTML = 'Click the number to be moved.'
+		setActionNotification('Click the number to be moved.')
 	}
 }
 
 function celebrate() {
-	container_id = retrieveData("container")
-	document.getElementById(container_id).innerHTML = '<img src="images/celebrations.gif">'
+	total_timeout = 2000
+	greenifyCellsAnimate(total_timeout)
+	setTimeout(function(){ 
+		document.getElementById(container_id).innerHTML = '<img src="images/celebrations.gif">'
+	 }, total_timeout);
+}
+
+function greenifyCellsAnimate(total_timeout) {
+	child_nodes = document.getElementById(container_id).childNodes
+	addLog('child_nodes[0]: ' + child_nodes[0])
+	puzzle_data = retrieveData("puzzle_data")
+	total_elements = puzzle_data.length * puzzle_data[0].length
+	addLog('total elements: ' + total_elements)
+	puzzle_table = child_nodes[0]
+	for (var i = 0, row; row = puzzle_table.rows[i]; i++) {
+		for (var j = 0, col; col = row.cells[j]; j++) {
+			if(col.childNodes[0].innerHTML != ''){
+				timeout = ((i + 1) + (j + 1)) * total_timeout / total_elements
+				setTimeout(function(col_id, timeout){ 
+					document.getElementById(col_id).className = 'solver_item solved'
+				 }, timeout, col.childNodes[0].id, parseInt(col.childNodes[0].innerHTML, 10));
+			}
+		}  
+	}
 }
 
 function compareSolved(puzzle_data) {
-	// addLog('comparing solved? ' + JSON.stringify(puzzle_data))
+	addLog('comparing solved? ' + JSON.stringify(puzzle_data))
 	flattened = puzzle_data.reduce(function(a, b){
-				     return a.concat(b);
-				}, []);
-	// addLog('flattened: ' + flattened)
+		return a.concat(b);
+	}, []);
+	addLog('flattened: ' + flattened)
 	flattened.splice(flattened.length - 1, 1);
 	copy = JSON.parse(JSON.stringify(flattened))
-	sorted = copy.sort();
-	// addLog('flattened minus last: ' + JSON.stringify(flattened)) // ideally zero should be the one removed..
-	// addLog('flattened sorted: ' + JSON.stringify(sorted))
+	function sortNumber(a,b) {
+		return a - b;
+	}
+	sorted = copy.sort(sortNumber);
+	addLog('flattened minus last: ' + JSON.stringify(flattened)) // ideally zero should be the one removed..
+	addLog('flattened sorted: ' + JSON.stringify(sorted))
 	isSolved = (JSON.stringify(flattened).localeCompare(JSON.stringify(sorted)) == 0)
-	// addLog('isSolved: ' + isSolved)
+	addLog('isSolved: ' + isSolved)
 	return isSolved
 }
 
@@ -124,8 +142,8 @@ function swapWithZero(cell_data, puzzle_data) {
 	addLog('position_cell_data: ' + position_cell_data)
 	position_zero = position('0', puzzle_data)
 	addLog('position_zero: ' + position_zero)
-	puzzle_data[position_cell_data[0]][position_cell_data[1]] = '0'
-	puzzle_data[position_zero[0]][position_zero[1]] = cell_data
+	puzzle_data[position_cell_data[0]][position_cell_data[1]] = 0
+	puzzle_data[position_zero[0]][position_zero[1]] = parseInt(cell_data, 10)
 	addLog('new puzzle data is: ' + puzzle_data)
 	return puzzle_data
 }
@@ -180,5 +198,9 @@ function retrieveData(key) {
 }
 
 function addLog(argument) {
-	// console.log(argument)
+	console.log(argument)
+}
+
+function setActionNotification(message) {
+	document.getElementById("action_placeholder").innerHTML = message
 }
