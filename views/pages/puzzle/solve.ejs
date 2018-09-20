@@ -3,11 +3,12 @@
 <head>
   <% include ../../partials/header.ejs %>
   <link rel="stylesheet" type="text/css" href="stylesheets/solver.css">
+  <link rel="stylesheet" type="text/css" href="stylesheets/switch.css">
   <script type="text/javascript" src="/scripts/createpuzzle.js"></script>
   <script type="text/javascript" src="/scripts/loadpuzzle.js"></script>
 </head>
 
-<body onload="onload('puzzle_container', '<%= puzzleDataSource %>')">
+<body onload="onload('puzzle_container', '<%= puzzleDataSource3 %>')">
 
   <% include ../../partials/nav.ejs %>
 
@@ -17,8 +18,21 @@
       <!-- <img src="/lang-logo.png"> -->
     <!-- </a> -->
     <p>Move around the numbers till they are okay with each other.</p>
-    <a type="button" class="btn btn-lg btn-default another-puzzle-btn" onclick="reloadPuzzle('puzzle_container', '<%= puzzleDataSource %>')"><span class="glyphicon glyphicon-flash"></span> Another Puzzle</a>
-    <a type="button" class="btn btn-lg btn-default another-puzzle-btn" onclick="reloadPuzzle('puzzle_container', '<%= easyPuzzleDataSource %>')"><span class="glyphicon glyphicon-flash"></span> Easy Puzzle</a>
+    <!-- <table> -->
+      <!-- <tr>
+        <label class="switch">
+          <input id="checkbox_size" type="checkbox" unchecked>
+          <span class="slider round"></span>
+        </label>
+        <span id="puzzle_size_span" class="btn-lg btn-default">3x3</span>
+      </tr> -->
+      <!-- <tr> -->
+        <a type="button" id="another_puzzle_btn" class="btn btn-lg btn-default another-puzzle-btn" onclick="reloadPuzzle('puzzle_container', '<%= puzzleDataSource3 %>')"><span class="glyphicon glyphicon-flash"></span> Another 3x3 Puzzle</a>
+        <a type="button" id="another_puzzle_btn" class="btn btn-lg btn-default another-puzzle-btn" onclick="reloadPuzzle('puzzle_container', '<%= puzzleDataSource4 %>')"><span class="glyphicon glyphicon-flash"></span> Another 4x4 Puzzle</a>
+      <!-- </tr> -->
+    <!-- </table> -->
+    
+    
     <!-- <a type="button" class="btn btn-lg btn-primary" href="#"><span class="glyphicon glyphicon-download"></span> Ongoing Puzzles</a> -->
   </div>
 </div>

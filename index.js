@@ -10,6 +10,6 @@ express()
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
-  .get('/solve', (req, res) => res.render('pages/puzzle/solve', {puzzleDataSource: service + 'randompuzzle',
-																easyPuzzleDataSource: service + 'solvedpuzzle'}))
+  .get('/solve', (req, res) => res.render('pages/puzzle/solve', {puzzleDataSource3: service + 'newpuzzle/3/30',
+																puzzleDataSource4: service + 'newpuzzle/4/80'}))
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))

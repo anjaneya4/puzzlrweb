@@ -46,11 +46,14 @@ function displayKudos(solved) {
 }
 
 function celebrate() {
-	total_timeout = 2000
+	total_timeout = 1000
 	greenifyCellsAnimate(total_timeout)
 	setTimeout(function(){ 
-		document.getElementById(container_id).innerHTML = '<img src="images/celebrations.gif">'
+		if(checkEventEnqueued()){
+			document.getElementById(container_id).innerHTML = '<img src="images/celebrations.gif">'
+		}
 	 }, total_timeout);
+	setEventEnqueued()
 }
 
 function greenifyCellsAnimate(total_timeout) {
@@ -65,11 +68,14 @@ function greenifyCellsAnimate(total_timeout) {
 			if(col.childNodes[0].innerHTML != ''){
 				timeout = ((i + 1) + (j + 1)) * total_timeout / total_elements
 				setTimeout(function(col_id, timeout){ 
-					document.getElementById(col_id).className = 'solver_item solved'
+					if(checkEventEnqueued()){
+						document.getElementById(col_id).className = 'solver_item solved'
+					}
 				 }, timeout, col.childNodes[0].id, parseInt(col.childNodes[0].innerHTML, 10));
 			}
 		}  
 	}
+	setEventEnqueued()
 }
 
 function compareSolved(puzzle_data) {
@@ -203,4 +209,19 @@ function addLog(argument) {
 
 function setActionNotification(message) {
 	document.getElementById("action_placeholder").innerHTML = message
+}
+
+function retrieveQueuedEvents(){
+	return retrieveData("queued_events_map")
+}
+
+function setEventEnqueued(){
+	queued_events_map = retrieveQueuedEvents()
+	queued_events_map['event_enqueued'] = 1
+	storeData("queued_events_map", queued_events_map)
+}
+
+function checkEventEnqueued(){
+	queued_events_map = retrieveQueuedEvents()
+	return 'event_enqueued' in queued_events_map
 }

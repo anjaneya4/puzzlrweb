@@ -2,11 +2,13 @@ function onload(container, dataSource) {
 	checkResources(container, dataSource)
 	storeData("dataSource", dataSource)
 	storeData("container", container)
+	resetQueuedEvents()	
 	loadPuzzle(container, dataSource)
 }
 
 function reloadPuzzle(container, dataSource, force=true) {
 	if(force) clearPuzzleData()
+	resetQueuedEvents()
 	clearPuzzle(container, dataSource)
 	loadPuzzle(container, dataSource)
 }
@@ -44,3 +46,11 @@ function clearPuzzleData() {
 	addLog('clearing puzzle data...')
 	localStorage.removeItem("puzzle_data")
 }
+
+function resetQueuedEvents(){
+	addLog('resetting queued events...')
+	localStorage.removeItem("queued_events_map")
+	queued_events_map = new Object()
+	storeData('queued_events_map', queued_events_map)
+}
+
