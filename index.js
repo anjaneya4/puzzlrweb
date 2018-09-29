@@ -1,6 +1,6 @@
 var WebSocketServer = require("ws").Server,
 		express = require("express"),
-		http = require("http"),
+		http = require("https"),
 		app = express(),
 		server = http.createServer(app),
 		players = {};
