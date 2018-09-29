@@ -4,7 +4,7 @@ websocket = null
 
 function loadPlay(wsource) {
 	socketSource = wsource
-	console.log('Loaded game page.')
+	addLog('Loaded game page.')
 	var game = 'New Game'
 	var container = 'game_container'
 	startWait(container)
@@ -17,7 +17,7 @@ function startWait(container) {
 
 function registerPlayer(container, dataSource) {
 	if ('WebSocket' in window){
-		console.log('WebSocket is available in the platform!')
+		addLog('WebSocket is available in the platform!')
 	   /* WebSocket is supported. You can proceed with your code*/
 	} else {
 		alert('WebSocket is NOT available!')
@@ -25,27 +25,27 @@ function registerPlayer(container, dataSource) {
 	}
 	websocket = new WebSocket(socketSource);
 	websocket.onopen = function(){
-		console.log("Socket has been opened!");
+		addLog("Socket has been opened!");
 		document.getElementById('con_connecting').className = 'hidden_indicator'
 		document.getElementById('con_wait_for_match').className = ''
 		sendMessage('register', 'Hola')
 	}
 	websocket.onerror = function (error) {
-	  console.log('WebSocket Error ' + error);
-	  console.log(error);
+	  addLog('WebSocket Error ' + error);
+	  addLog(error);
 	};
 	websocket.onclose = function() {
-		console.log("closed");
+		addLog("closed");
 	};
 	websocket.onmessage = function (event) {
-	  console.log(event.data);
+	  addLog(event.data);
 	  var messageObj = JSON.parse(event.data)
 	  var messageType = messageObj.messageType
 	  var messageBody = messageObj.messageBody
-	  console.log(messageObj)
-	  console.log('recieved message: [messageType: ' + messageType + ', messageBody: ' + messageBody + ']')
+	  addLog(messageObj)
+	  addLog('recieved message: [messageType: ' + messageType + ', messageBody: ' + messageBody + ']')
 	  if(messageType == 'start_game'){
-	  	console.log('Started Game!')
+	  	addLog('Started Game!')
 	  	localStorage.clear()
 	  	storeData("puzzle_data", messageBody)
 	  	storeData("container", container)
@@ -78,13 +78,13 @@ function registerPlayer(container, dataSource) {
 	// 	message: 'Hola Lala'
 	// }));
 	// websocket.onmessage = function(evt) {
- //    console.log(evt.data)
+ //    addLog(evt.data)
 // };
 }
 
 function sendMessage(messageType, messageBody) {
 	var msg = JSON.stringify({"messageType": messageType, "messageBody": messageBody})
-	console.log('sending message to server: ' + msg)
+	addLog('sending message to server: ' + msg)
 	websocket.send(msg)
 }
 

@@ -215,7 +215,7 @@ function retrieveData(key) {
 }
 
 function addLog(argument) {
-	console.log(argument)
+	// console.log(argument)
 }
 
 function setActionNotification(message) {
