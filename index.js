@@ -1,15 +1,16 @@
 var WebSocketServer = require("ws").Server,
 		express = require("express"),
-		http = require("https"),
+		http = require("http"),
 		app = express(),
 		server = http.createServer(app),
 		players = {};
 
 const path = require('path')
 const PORT = process.env.PORT || 5000
-const service_endpoint = 'https://puzzlr4u.herokuapp.com/api/'
+const service_endpoint = 'http://puzzlr4u.herokuapp.com/api/'
+const insecure_service_endpoint = 'https://puzzlr4u.herokuapp.com/api/'
 // const service_endpoint = 'http://localhost:8080/api/'
-const wsource = 'wss://puzzlrweb.herokuapp.com/warzone'
+const wsource = 'ws://puzzlrweb.herokuapp.com/warzone'
 // const wsource = 'ws://localhost:5000/warzone'
 
 function sendGameData(user_index, ws, player) {
