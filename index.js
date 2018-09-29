@@ -9,7 +9,7 @@ const path = require('path')
 const PORT = process.env.PORT || 5000
 const service_endpoint = 'https://puzzlr4u.herokuapp.com/api/'
 // const service_endpoint = 'http://localhost:8080/api/'
-const wsource = 'ws://puzzlrweb.herokuapp.com/warzone'
+const wsource = 'wss://puzzlrweb.herokuapp.com/warzone'
 // const wsource = 'ws://localhost:5000/warzone'
 
 function sendGameData(user_index, ws, player) {
