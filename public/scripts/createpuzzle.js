@@ -27,7 +27,8 @@ function parseData(container, dataSource, target, tableData) {
 		tableBody.appendChild(row);
 	});
 	table.appendChild(tableBody);
-	container = document.getElementById(container_id)
+	addLog('container: ' + container)
+	container = document.getElementById(container)
 	parent = container.parentElement
 	parent.removeChild(container);
 	target.appendChild(table)
@@ -46,6 +47,16 @@ function displayKudos(solved) {
 }
 
 function celebrate() {
+	try {
+	    var callback = onCompleteGame
+		if(typeof(callback) === "function"){
+			addLog('callback exists!')
+			callback()
+		}
+	}
+	catch(err) {
+	    addLog('Error while searching for callback: ' + err)
+	}
 	total_timeout = 1000
 	greenifyCellsAnimate(total_timeout)
 	setTimeout(function(){ 
@@ -204,7 +215,7 @@ function retrieveData(key) {
 }
 
 function addLog(argument) {
-	// console.log(argument)
+	console.log(argument)
 }
 
 function setActionNotification(message) {

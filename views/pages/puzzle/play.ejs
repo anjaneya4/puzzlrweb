@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../../partials/header.ejs %>
+  <link rel="stylesheet" type="text/css" href="stylesheets/play.css">
+  <link rel="stylesheet" type="text/css" href="stylesheets/solver.css">
+  <script type="text/javascript" src="/scripts/easytimer.min.js"></script>
+  <script type="text/javascript" src="/scripts/createpuzzle.js"></script>
+  <script type="text/javascript" src="/scripts/loadpuzzle.js"></script>
+  <script type="text/javascript" src="/scripts/playgame.js"></script>
+</head>
+
+<body onload="loadPlay('<%= wsource %>')">
+
+  <% include ../../partials/nav.ejs %>
+
+  <div class="jumbotron text-center">
+    <p>
+      <div id="con_connecting" class="">
+        <p>
+          <span>
+            <img class="status_icon" src="images/index.dash-ring-loading-icon.svg" class="loading_image">
+          </span> 
+          Connecting to warzone hub...
+        </p>
+      </div>
+      <div id="con_wait_for_match" class="hidden_indicator">
+        <p>
+          <span>
+            <img class="status_icon" src="images/index.walking-clock-preloader.svg">
+          </span>
+          <span>Prepare for war...</span>
+        </p>
+      </div>
+      <div id="ongoing_game_timer" class="hidden_indicator">
+        <p>
+          <span>
+            <img class="status_icon" src="images/index.walking-clock-preloader.svg">
+          </span>
+          <span id="timer_text">Go, go, go...!</span>
+        </p>
+      </div>
+      <div id="final_message" class="hidden_indicator">
+        <p id="final_message_text">
+        </p>
+      </div>
+    </p>
+  </div>
+<div class="container text-center">
+  <p id= "action_placeholder" class="text-center">Loading your puzzle...</p>
+  <div id="game_container" class="container text-center">
+    <img src="images/loading.gif" class="loading_image">
+  </div>
+</div>
+
+
+</body>
+</html>

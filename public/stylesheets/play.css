@@ -1,0 +1,31 @@
+.text_column {
+  	color: #5b9aa0;
+  	font-size: 30px;
+  	text-align: right;
+  	padding-right: 15px;
+}
+.value_column {
+  	color: #5b9aa0;
+  	font-size: 30px;
+  	text-align: left;
+  	padding-right: 15px;
+}
+.rival_text {
+  	color: red;
+  	font-size: 30px;
+  	text-align: right;
+  	padding-right: 15px;
+}
+.form_table {
+	margin-left: auto;
+	margin-right: auto;
+}
+.hidden_indicator {
+  visibility: hidden;
+  height: 0px;
+  float: right;
+}
+img.status_icon {
+  height: 70px;
+  width: 70px;
+}
